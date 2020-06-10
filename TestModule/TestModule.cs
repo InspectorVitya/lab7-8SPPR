@@ -20,17 +20,7 @@ namespace TestModule
 
     
 
-        
-        long ellapledTicks = DateTime.Now.Ticks;
-        //var tr = new List<Truck>() {
-        //            new Truck(dataObj[i].Coordinate,1000,100,"Хендай Портер"),
-        //            new Truck(dataObj[i].Coordinate,1500,95,"ГАЗель"),
-        //            new Truck(dataObj[i].Coordinate,3000,60,"ЗИЛ Бычок"),
-        //            new Truck(dataObj[i].Coordinate,20000,40,"Mercedesa Actros"),
-        //        };
-
-
-
+ 
         protected override void Initialize()
         {
             var dataProvider = new Provider[]
@@ -117,21 +107,21 @@ namespace TestModule
             // List<Truck> trucks = MapObjects.GetAll<Truck>();
             List<Provider> Providers = MapObjects.GetAll<Provider>();
             List<Customer> Customers = MapObjects.GetAll<Customer>();
-            if (MapObjects.GetAll<Truck>().Count < 35 && Rand.MayBe(0.3))
+            var truks = MapObjects.GetAll<Truck>();
+            if (truks.Count < 35 && Rand.MayBe(0.2))
             {
-
-                MapObjects.Add(new Truck(new Coordinate(Providers[Rand.GenerateInRange(0, 17)].Coordinate), Rand.GenerateInRange(250, 5000), Rand.GenerateInRange(80, 120), new Coordinate(Customers[Rand.GenerateInRange(0, 32)].Coordinate)));
-
+                var weight = Rand.GenerateInRange(250, 5000);
+                MapObjects.Add(new Truck(new Coordinate(Providers[Rand.GenerateInRange(0, 17)].Coordinate),weight, Rand.GenerateInRange(80, 130), new Coordinate(Customers[Rand.GenerateInRange(0, 32)].Coordinate)));
+                Console.WriteLine("Машина отправлена " + weight + " кг");
+            }
+            if (Rand.MayBe(0.001))
+            {
+                Console.WriteLine("Машина сломалась");
+                MapObjects.Remove(truks[Rand.GenerateInRange(1, truks.Count-1)]);
             }
 
-
-
-
-
-
-
-
-            foreach (var truck in MapObjects.GetAll<Truck>())
+            truks = MapObjects.GetAll<Truck>();
+            foreach (var truck in truks)
             {
                 
 
@@ -148,7 +138,7 @@ namespace TestModule
                     truck.loaded = false;
                     truck.goHome();
                 }
-                else if (truck.loaded )
+                else if (!truck.loaded )
                 {
                     Console.WriteLine("Машина приехала с заказа");
                  
@@ -174,7 +164,7 @@ namespace TestModule
 
     }
 
-    static class ConvertorCoordinates
+static class ConvertorCoordinates
 {
     // EPSG:3857 to EPSG:4326
     static public Coordinate MeterToDegress(Coordinate cord)
@@ -229,8 +219,6 @@ static class Navigator
 
 
     }
-
-
 
 
 
