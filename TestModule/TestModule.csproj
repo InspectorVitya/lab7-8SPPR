@@ -14,6 +14,6 @@
     <PackageReference Include="NetTopologySuite.Features" Version="2.1.0" />
     <PackageReference Include="Polyliner.Net" Version="1.0.1.1" />
     <PackageReference Include="ProjNET4GeoAPI" Version="1.4.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 </Project>
